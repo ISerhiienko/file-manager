@@ -2,6 +2,7 @@ import readline from "readline";
 import { listDirectory } from "./modules/listDirectory.js";
 import { navigateUp } from "./modules/navigateUp.js";
 import {navigateToDirectory} from "./modules/navigateToDirectory.js";
+import {readFile} from "./modules/readFile.js";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -52,7 +53,9 @@ const processInput = async (input) => {
     case 'cd':
       await navigateToDirectory(args[0]);
       break;
-
+    case 'cat':
+      await readFile(args[0], currentDir);
+      break;
     default:
       console.log(`Invalid input`);
   }
