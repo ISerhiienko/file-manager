@@ -1,4 +1,5 @@
 import readline from "readline";
+import { listDirectory } from "./modules/listDirectory.js";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -10,7 +11,7 @@ const USERNAME = process.argv
   .find((arg) => arg.startsWith("--username="))
   .split("=")[1];
 
-const getCurrentWorkingDirectory = () => process.cwd();
+export const getCurrentWorkingDirectory = () => process.cwd();
 
 const displayWelcomeMessage = () => {
   console.log(
@@ -27,6 +28,24 @@ const printGoodbyeMessage = () => {
 };
 
 displayWelcomeMessage();
+
+const processInput = async (input) => {
+  const [command, ...args] = input.split(" ");
+
+  switch (command) {
+    case "ls":
+      await printCurrentDirectory();
+      await listDirectory(getCurrentWorkingDirectory);
+      break;
+
+    default:
+      console.log("Invalid input");
+  }
+};
+
+rl.on("line", async (input) => {
+  await processInput(input);
+});
 
 rl.on("close", () => {
   printGoodbyeMessage();
