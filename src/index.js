@@ -3,6 +3,7 @@ import { listDirectory } from "./modules/listDirectory.js";
 import { navigateUp } from "./modules/navigateUp.js";
 import {navigateToDirectory} from "./modules/navigateToDirectory.js";
 import {readFile} from "./modules/readFile.js";
+import {createFile} from "./modules/createFile.js";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -55,6 +56,9 @@ const processInput = async (input) => {
       break;
     case 'cat':
       await readFile(args[0], currentDir);
+      break;
+    case 'add':
+      await createFile(args[0]);
       break;
     default:
       console.log(`Invalid input`);
