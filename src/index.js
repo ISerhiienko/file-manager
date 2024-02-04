@@ -7,6 +7,7 @@ import {createFile} from "./modules/createFile.js";
 import {renameFile} from "./modules/renameFile.js";
 import {copyFile} from "./modules/copyFile.js";
 import {moveFile} from "./modules/moveFile.js";
+import {deleteFile} from "./modules/deleteFile.js";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -80,6 +81,11 @@ const processInput = async (input) => {
 
     case 'mv':
       await moveFile(args[0], args[1], currentDir);
+      await printCurrentDirectory();
+      break;
+
+    case 'rm':
+      await deleteFile(args[0], currentDir);
       await printCurrentDirectory();
       break;
 
