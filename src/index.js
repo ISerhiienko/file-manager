@@ -9,6 +9,7 @@ import {copyFile} from "./modules/copyFile.js";
 import {moveFile} from "./modules/moveFile.js";
 import {deleteFile} from "./modules/deleteFile.js";
 import {showOsInfo} from "./modules/showOsInfo.js"
+import {calculateHash} from "./modules/calculateHash.js";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -91,6 +92,9 @@ const processInput = async (input) => {
       break;
     case 'os':
       await showOsInfo(args[0]);
+      break;
+    case 'hash':
+      await calculateHash([args[0]], currentDir);
       break;
 
     default:
