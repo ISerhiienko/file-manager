@@ -1,19 +1,30 @@
 import fs from "fs/promises";
+import path from 'path';
 
 export const listDirectory = async (currentDir) => {
   try {
     const contents = await fs.readdir(currentDir);
     const sortedContents = contents.sort();
 
-    for (const item of sortedContents) {
+    console.log("┌───────┬──────────────────────────┬───────┐");
+    console.log("│ index │           name           │ type  │");
+    console.log("├───────┼──────────────────────────┼───────┤");
+
+    for (let i = 0; i < sortedContents.length; i++) {
+      const item = sortedContents[i];
       const itemType = (
-        await fs.stat(`${currentDir}/${item}`)
+          await fs.stat(path.join(currentDir, item))
       ).isDirectory()
-        ? "folder"
-        : "file";
-      console.log(`${item} (${itemType})`);
+          ? "folder"
+          : "file";
+
+      console.log(
+          `│ ${i + 1}\t│ ${item.padEnd(25)}│ ${itemType.padEnd(5)}│`
+      );
     }
+
+    console.log("└───────┴──────────────────────────┴───────┘");
   } catch (error) {
-    console.log("Error:", error.message);
+    console.error("Error:", error.message);
   }
 };
